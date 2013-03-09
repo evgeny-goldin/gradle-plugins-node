@@ -1,0 +1,38 @@
+{
+  "redis": {
+    "redis_servers": {
+      "local": {
+        "host": "1.2.3.4",
+        "port": 6379
+      }
+    },
+    "preloader": {
+      "host": "5.6.7.8",
+      "port": 6379
+    },
+    "loglines": {
+      "host": "9.10.11.12",
+      "port": 6379
+    },
+    "budgetcontrol": {
+      "host": "13.14.15.16",
+      "port": 6381
+    },
+    "targeting": {
+      "host": "17.18.19.20",
+      "port": 6382
+    },
+    "preloader_master": {
+      "host": "21.22.23.24",
+      "port": 6383
+    }
+  },
+  "mysql": {
+    "log": {
+      "host"       : "25.26.27.28",
+      "user"       : "25.26.27.28-user",
+      "password"   : "25.26.27.28-password",
+      "database"   : "25.26.27.28-database"
+    }
+  }
+}

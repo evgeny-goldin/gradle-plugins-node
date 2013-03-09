@@ -1,0 +1,12 @@
+include 'hello-js'
+include 'hello-js-port-number'
+include 'hello-coffee-port-number'
+include 'hello-js-configs-new-keys'
+include 'hello-js-configs-update-keys'
+
+include 'run-commands'
+
+include 'nirc'
+include 'nodejs-blackboard'
+
+rootProject.name = 'gradle-plugins-node'

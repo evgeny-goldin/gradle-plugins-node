@@ -1,0 +1,43 @@
+{
+  "port": 0,
+  "cassandra": {
+    "keyspace": "stage",
+    "column_family": "events"
+  },
+  "redis": {
+    "redis_servers": {
+      "local": {
+        "host": "",
+        "port": 0
+      }
+    },
+    "preloader": {
+      "host": "",
+      "port": 0
+    },
+    "preloader_master": {
+      "host": "",
+      "port": 0
+    },
+    "loglines": {
+      "host": "",
+      "port": 0
+    },
+    "budgetcontrol": {
+      "host": "",
+      "port": 0
+    },
+    "targeting": {
+      "host": "",
+      "port": 0
+    }
+  },
+  "mysql": {
+    "log": {
+      "host"       : "",
+      "user"       : "",
+      "password"   : "",
+      "database"   : ""
+    }
+  }
+}

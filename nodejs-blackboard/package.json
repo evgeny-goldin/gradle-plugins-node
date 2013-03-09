@@ -1,0 +1,18 @@
+{
+    "name": "nodejs-blackboard",
+    "description": "Test nodejs app",
+    "version": "0.0.4",
+    "private": true,
+    "comment": " -=-= Build fails if 'coffee-script' is updated to '1.6.0'! =-=-",
+    "dependencies": {
+        "express"       : "3.1.0",
+        "jade"          : "0.28.2",
+        "stylus"        : "0.32.1",
+        "coffee-script" : "1.5.0",
+        "nib"           : "0.9.1",
+        "socket.io"     : "0.9.13",
+        "forever"       : "0.10.0",
+        "mongoose"      : "3.5.7"
+    },
+    "author": "Juan Pinilla"
+}

@@ -1,0 +1,24 @@
+{
+    "cookie": { "domain": null },
+    "host": "1.2.3.4",
+    "db": {
+      "reporting": {
+          "host": "5.6.7.8",
+          "password": "5.6.7.8-password",
+          "user": "5.6.7.8-user",
+          "database": "5.6.7.8-database"
+      },
+      "core": {
+          "host": "9.10.11.12",
+          "password": "9.10.11.12-password",
+          "user": "9.10.11.12-user",
+          "database": "9.10.11.12-database"
+      },
+      "costs": {
+          "host": "13.14.15.16",
+          "password": "13.14.15.16-password",
+          "user": "13.14.15.16-user",
+          "database": "13.14.15.16-database"
+      }
+    }
+}

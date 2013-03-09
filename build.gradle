@@ -1,0 +1,156 @@
+
+apply from: 'https://raw.github.com/evgeny-goldin/scripts/master/src/main/gradle/wrapper.gradle'
+
+buildscript {
+
+    final version = project.hasProperty( 'pluginsVersion' ) ? project.pluginsVersion : '0.2.2-SNAPSHOT'
+    println "> Running Node.js plugin version [$version]"
+
+    repositories {
+        /**
+         * Releases
+         */
+        maven { url 'http://jcenter.bintray.com' }
+        maven { url 'http://dl.bintray.com/content/evgenyg/BuildTools' }
+        /**
+         * Snapshots
+         */
+        mavenLocal()
+        maven { url 'http://evgenyg.artifactoryonline.com/evgenyg/repo/' }
+    }
+
+    dependencies { classpath "com.github.goldin.plugins.gradle:node:$version" }
+}
+
+defaultTasks 'clean', 'cleanModules', 'start', 'restartall', 'stop', 'stopall'
+
+
+int portNumberForProject( Project p ){ 3000 + ( Math.abs( p.name.hashCode()) % 100 ) }
+void assertEqual( File f1, File f2 )
+{
+    assert ( f1.text == f2.text ), "[$f1.canonicalPath] != [$f2.canonicalPath]"
+    println "[$f1.canonicalPath] = [$f2.canonicalPath]"
+}
+
+
+subprojects {
+    Project p ->
+    apply plugin: 'node'
+
+    node {
+        portNumber = portNumberForProject( p )
+    }
+
+    clean.doFirst {
+        if ( System.getProperty( 'cleanNode' ) != null )
+        {
+            final deleteFiles = [ new File( System.getProperty( 'user.home' ), '.npm' ),
+                                  new File( System.getProperty( 'user.home' ), '.nvm' ) ]
+
+            if ( deleteFiles.any{ it.exists() })
+            {
+                println "Deleting $deleteFiles"
+                project.delete( deleteFiles )
+            }
+        }
+    }
+}
+
+
+configure ( subprojects.findAll{ it.name.startsWith( 'hello-' ) }) {
+    Project p ->
+
+    node {
+        cleanWorkspace         = true
+        cleanWorkspaceCommands = [ 'git checkout -f config' ]
+        checkContent           = p.name + (( p.name == 'hello-js'                     ) ? '|yhn|890|' :
+                                           ( p.name == 'hello-js-port-number'         ) ? '|undefined|undefined|' :
+                                           ( p.name == 'hello-coffee-port-number'     ) ? '|zaq|123|' :
+                                           ( p.name == 'hello-js-configs-new-keys'    ) ? '|OLM|457|false|false' :
+                                           ( p.name == 'hello-js-configs-update-keys' ) ? '|IMN|784|true|true' :
+                                                                                          '' )
+        printConfigs = true
+        configs      = [[ 'config/development.json' : file( "${ project.name }.json" ) ],
+                        [ 'config/development.json' : [ port : portNumber ]]]
+    }
+
+    setup << {
+        /**
+         * Comparing all configs generated with '*-merged.json' files expected.
+         */
+        final configFiles = new File( p.projectDir, 'config' ).listFiles().findAll{ File f ->   f.name.endsWith( '.json' ) }.
+                                                                           findAll{ File f -> ! f.name.endsWith( '-merged.json' ) }
+        for ( File configFile in configFiles )
+        {
+            final mergedFile = new File( configFile.parentFile, configFile.name[ 0 .. -6 ] + '-merged.json' )
+            assertEqual( configFile, mergedFile )
+        }
+    }
+}
+
+
+project ( ':hello-js'                 ) { node { configsNewKeys = 'fail'   }}
+project ( ':hello-js-port-number'     ) { node { configsNewKeys = 'ignore' }}
+project ( ':hello-coffee-port-number' ) { node { configsNewKeys = 'create' }}
+
+
+project ( ':hello-js-configs-new-keys' ) {
+    Project p ->
+
+    node {
+        configsNewKeys = 'create'
+        configs        = [[ 'config/development.json'   : file( "${ project.name }.json" ) ],
+                          [ 'config/development.json'   : [ port : portNumber ]],
+                          [ 'config/development.json'   : file( "${ project.name }-2.json" ) ],
+                          [ 'config/development-2.json' : file( "${ project.name }.properties" ) ]]
+    }
+}
+
+
+project ( ':hello-js-configs-update-keys' ) {
+    Project p ->
+
+    node {
+        configsNewKeys = 'fail'
+        configs        = [[ 'config/development.json'   : file( "${ project.name }.json" ) ],
+                          [ 'config/development.json'   : [ port : portNumber ]],
+                          [ 'config/development-2.json' : file( "${ project.name }.properties" ) ],
+                          [ 'config/development-3.json' : file( "${ project.name }-3.json" ) ],
+                          [ 'config/development-4.json' : file( "${ project.name }-4.json" ) ],
+                          [ 'config/development-5.json' : file( "${ project.name }-5.json" ) ],
+                          [ 'config/development-6.json' : file( "${ project.name }-6.json" ) ],
+                          [ 'config/development-7.json' : file( "${ project.name }-7.json" ) ]]
+
+        replaces       = [[ 'config/resource.txt' : [ 'a'     : 'b',
+                                                      '/\\d/' : '!' ]]]
+    }
+
+    setup << { assertEqual( p.file( 'config/resource.txt' ), p.file( 'config/resource-replaced.txt' )) }
+}
+
+
+project ( ':run-commands' ){
+    node {
+        run          = [ 'pwd', 'coffee --version', 'grunt -version', 'git log -1', 'less --version', 'ls -al' ]
+        checkContent = '|run-commands|'
+    }
+}
+
+
+project ( ':nirc' ){
+    node {
+        checkContent = '<h1><i>n</i>irc</h1>'
+        redisPort    = 7000
+    }
+}
+
+
+project ( ':nodejs-blackboard' ){
+    node {
+        scriptPath   = 'app.coffee'
+        checkContent = '<h1>nodejs experiment</h1><p>blackboard</p>'
+        mongoPort    = 27017
+        mongoDBPath  = 'build/db'
+        before       = [ 'node add_data.js' ]
+    }
+}

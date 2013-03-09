@@ -1,0 +1,59 @@
+{
+  "application_name":"",
+  "host": "",
+  "port": 0,
+  "impression_url": "http://staging.com/impression/2.0/",
+  "db": {
+    "core": {
+      "host"       : "",
+      "user"       : "",
+      "password"   : "",
+      "database"   : "",
+      "snapshots"  : ""
+    },
+    "reporting": {
+      "host"       : "",
+      "user"       : "",
+      "password"   : "",
+      "database"   : ""
+    }
+  },
+  "cassandra": {
+    "keyspace": "stage",
+    "column_family": "events",
+    "key": "request"
+  },
+  "redis": {
+    "host": "",
+    "port": 0
+  },
+  "redis_util": {
+    "host": "",
+    "port": 0
+  },
+  "redis_master": {
+    "host": "",
+    "port": 0
+  },
+  "redis_budget_master": {
+    "host": "",
+    "port": 0
+  },
+  "redis_preloader_master": {
+    "host": "",
+    "port": 0
+  },
+  "imp_server": {
+    "host": "",
+    "port": 0
+  },
+  "streammine": {
+    "frequency":0,
+    "host": "",
+    "port": ""
+  },
+  "statsd": {
+    "port": "",
+    "host": ""
+  }
+}

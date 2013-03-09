@@ -1,0 +1,43 @@
+{
+    "cookie": {
+        "domain": "localhost"
+    },
+    "seed_data": false,
+    "port": 0,
+    "host": "localhost",
+    "db": {
+        "reporting": {
+            "host": "localhost",
+            "password": "",
+            "user": "root",
+            "port": 3306,
+            "database": "data_test"
+        },
+        "core": {
+            "host": "localhost",
+            "password": "",
+            "user": "root",
+            "port": 3306,
+            "database": "core_test"
+        },
+        "costs": {
+            "host": "localhost",
+            "password": "",
+            "user": "root",
+            "port": 3306,
+            "database": "ext_reporting"
+        }
+    },
+    "enable_mailing": false,
+    "directories": {
+        "test": "#ROOT/test/",
+        "log": "#ROOT/log/"
+    },
+    "log": {
+        "console": {
+            "timestamp": false,
+            "silent": true,
+            "colorize": true
+        }
+    }
+}
