@@ -1,0 +1,106 @@
+/* form elelments */
+@textWidth: 220px;
+@textHeight: 32px;
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea,
+select {
+  display: inline-block;
+  margin: 0;
+  font-size:15px;
+  border:1px solid #dcdcdc;
+  background:#fff;
+  color: #777;
+  width: @textWidth;
+  height: @textHeight;
+  .border-radius(3px);
+  padding:0 7px;
+  outline: none;
+}
+
+textarea {
+  padding:7px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  outline: 0;
+  outline: thin dotted \9; /* IE6-9 */
+  border:1px solid #ccc;
+}
+
+select {
+  padding: 0; 
+  width:textWidth;
+}
+
+.input .label {
+  font-size:16px;
+  width:100px;
+  margin-right:10px;
+  display: inline-block;
+}
+
+input[type="checkbox"] {
+  display: inline; 
+}
+
+input[type="radio"] {
+  border:0;
+  margin-right:7px;
+}
+
+.radio {
+  width:110px;
+  font-size:16px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.input {
+  margin:25px auto 30px auto;
+  width: @textWidth + 132px
+}
+
+.button {
+  @boxee: 0 -1px rbga(255, 255, 255, 0.5), inset 0 -1px rgba(255, 255, 255, 0.5);
+  .box-shadow(@boxee);
+  .border-radius(0.3em);
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #fafafa) );
+  background:-moz-linear-gradient( center top, #ffffff 5%, #fafafa 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#fafafa');
+  background-color: #fff;
+  border: 1px solid rgba(166, 166, 166, 0.5);
+  display: inline-block;
+  font-weight:bold;
+  color: @red;
+  text-decoration: none;
+  text-shadow: 1px 1px 0px #fff;
+  width: @textWidth + 10px;
+  height: @textHeight - 5px;
+}
+
+.button:hover, .button:focus {
+  text-decoration: none;
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#ffffff),to(#F1F1F1));
+  background-image: -webkit-linear-gradient(top,#ffffff,#F1F1F1);
+  background-image: -moz-linear-gradient(top,#ffffff,#F1F1F1);
+  background-image: -ms-linear-gradient(top,#ffffff,#F1F1F1);
+  background-image: -o-linear-gradient(top,#ffffff,#F1F1F1);
+  background-image: linear-gradient(top,#ffffff,#F1F1F1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff',EndColorStr='#F1F1F1');
+  outline: none;
+}
+
+.button:active {
+  .box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.3));
+}
+
+.button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
