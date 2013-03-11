@@ -1,5 +1,5 @@
 apply plugin: 'idea'
-apply from:   'https://raw.github.com/evgeny-goldin/scripts/master/src/main/gradle/wrapper.gradle'
+apply from:   'http://dl.bintray.com/content/evgenyg/GradleScripts/wrapper.gradle'
 
 buildscript {
 
