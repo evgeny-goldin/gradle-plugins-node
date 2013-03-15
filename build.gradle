@@ -1,5 +1,6 @@
 apply plugin: 'idea'
-apply from:   'http://dl.bintray.com/content/evgenyg/GradleScripts/wrapper.gradle'
+apply from:   'http://evgenyg.artifactoryonline.com/evgenyg/libs-releases-local/wrapper.gradle'
+
 
 buildscript {
 
