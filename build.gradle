@@ -71,7 +71,7 @@ configure ( subprojects.findAll{ it.name.startsWith( 'hello-' ) }) {
                                            ( p.name == 'hello-js-configs-update-keys' ) ? '|IMN|784|true|true' :
                                                                                           '' )
         printConfigs = true
-        configs      = [[ 'config/development.json' : file( "${ project.name }.json" ) ],
+        configs      = [[ 'config/development.json' : file( "${ projectDir.name }.json" ) ],
                         [ 'config/development.json' : [ port : portNumber ]]]
     }
 
@@ -90,37 +90,36 @@ configure ( subprojects.findAll{ it.name.startsWith( 'hello-' ) }) {
 }
 
 
-project ( ':hello-js'                 ) { node { configsNewKeys = 'fail'   }}
-project ( ':hello-js-port-number'     ) { node { configsNewKeys = 'ignore' }}
-project ( ':hello-coffee-port-number' ) { node { configsNewKeys = 'create' }}
+project ( ':hello-js/hello-js'                  ) { node { configsNewKeys = 'fail'   }}
+project ( ':hello-js/hello-js-port-number'      ) { node { configsNewKeys = 'ignore' }}
+project ( ':hello-js/hello-coffee-port-number'  ) { node { configsNewKeys = 'create' }}
 
-
-project ( ':hello-js-configs-new-keys' ) {
+project ( ':hello-js/hello-js-configs-new-keys' ) {
     Project p ->
 
     node {
         configsNewKeys = 'create'
-        configs        = [[ 'config/development.json'   : file( "${ project.name }.json" ) ],
+        configs        = [[ 'config/development.json'   : file( "${ projectDir.name }.json" ) ],
                           [ 'config/development.json'   : [ port : portNumber ]],
-                          [ 'config/development.json'   : file( "${ project.name }-2.json" ) ],
-                          [ 'config/development-2.json' : file( "${ project.name }.properties" ) ]]
+                          [ 'config/development.json'   : file( "${ projectDir.name }-2.json" ) ],
+                          [ 'config/development-2.json' : file( "${ projectDir.name }.properties" ) ]]
     }
 }
 
 
-project ( ':hello-js-configs-update-keys' ) {
+project ( ':hello-js/hello-js-configs-update-keys' ) {
     Project p ->
 
     node {
         configsNewKeys = 'fail'
-        configs        = [[ 'config/development.json'   : file( "${ project.name }.json" ) ],
+        configs        = [[ 'config/development.json'   : file( "${ projectDir.name }.json" ) ],
                           [ 'config/development.json'   : [ port : portNumber ]],
-                          [ 'config/development-2.json' : file( "${ project.name }.properties" ) ],
-                          [ 'config/development-3.json' : file( "${ project.name }-3.json" ) ],
-                          [ 'config/development-4.json' : file( "${ project.name }-4.json" ) ],
-                          [ 'config/development-5.json' : file( "${ project.name }-5.json" ) ],
-                          [ 'config/development-6.json' : file( "${ project.name }-6.json" ) ],
-                          [ 'config/development-7.json' : file( "${ project.name }-7.json" ) ]]
+                          [ 'config/development-2.json' : file( "${ projectDir.name }.properties" ) ],
+                          [ 'config/development-3.json' : file( "${ projectDir.name }-3.json" ) ],
+                          [ 'config/development-4.json' : file( "${ projectDir.name }-4.json" ) ],
+                          [ 'config/development-5.json' : file( "${ projectDir.name }-5.json" ) ],
+                          [ 'config/development-6.json' : file( "${ projectDir.name }-6.json" ) ],
+                          [ 'config/development-7.json' : file( "${ projectDir.name }-7.json" ) ]]
 
         replaces       = [[ 'config/resource.txt' : [ 'a'     : 'b',
                                                       '/\\d/' : '!' ]]]
@@ -131,18 +130,12 @@ project ( ':hello-js-configs-update-keys' ) {
 
 
 project ( ':run-commands' ){
-    node {
-        run          = [ 'pwd', 'coffee --version', 'grunt -version', 'git log -1', 'less --version', 'ls -al' ]
-        checkContent = '|run-commands|'
-    }
+    node { run = [ 'pwd', 'coffee --version', 'grunt -version', 'git log -1', 'less --version', 'ls -al' ]}
 }
 
 
 project ( ':nirc' ){
-    node {
-        checkContent = '<h1><i>n</i>irc</h1>'
-        redisPort    = 7000
-    }
+    node { checkContent = '<h1><i>n</i>irc</h1>' }
 }
 
 
@@ -150,8 +143,16 @@ project ( ':nodejs-blackboard' ){
     node {
         scriptPath   = 'app.coffee'
         checkContent = '<h1>nodejs experiment</h1><p>blackboard</p>'
-        mongoPort    = 27017
+        mongoPort    = 6000
         mongoDBPath  = 'build/db'
         before       = [ 'node add_data.js' ]
+    }
+}
+
+
+project ( ':redis' ){
+    node { 
+      redisPort    = 7000 
+      checkContent = '<h1><i>n</i>irc</h1>'
     }
 }
