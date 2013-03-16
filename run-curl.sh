@@ -24,8 +24,20 @@ curl http://127.0.0.1:3033
 echo nodejs-blackboard:
 curl http://127.0.0.1:3095
 
+echo nodejs-blackboard Mongo-1:
+curl http://127.0.0.1:27017
+
+echo nodejs-blackboard Mongo-2:
+curl http://127.0.0.1:28017
+
 echo uptime:
 curl http://127.0.0.1:3036
+
+echo uptime Mongo-1:
+curl http://127.0.0.1:27018
+
+echo uptime Mongo-2:
+curl http://127.0.0.1:28018
 
 echo We are good
 exit 0

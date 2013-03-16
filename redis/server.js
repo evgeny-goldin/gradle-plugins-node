@@ -6,7 +6,7 @@ http.createServer( function ( req, res ) {
   res.writeHead( 200, { 'Content-Type': 'text/plain' })
 
   var redis  = require("redis")
-  var client = redis.createClient( 27018 )
+  var client = redis.createClient( process.env.REDIS_PORT || 6379 )
 
   client.on( "error", function (err) { console.log("Error " + err) })
   client.set("string key", "string val", redis.print)

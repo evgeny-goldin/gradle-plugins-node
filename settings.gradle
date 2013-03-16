@@ -11,6 +11,4 @@ include 'nirc'
 include 'nodejs-blackboard'
 include 'uptime'
 
-//include 'Base-Node.js-App'
-
 rootProject.name = 'gradle-plugins-node'

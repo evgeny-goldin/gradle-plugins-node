@@ -3,14 +3,14 @@ var config     = require('config');
 var semver     = require('semver');
 
 // configure mongodb
-mongoose.connect(config.mongodb.connectionString || 'mongodb://' + config.mongodb.user + ':' + config.mongodb.password + '@' + config.mongodb.server +'/' + config.mongodb.database);
+mongoose.connect(config.mongodb.connectionString || 'mongodb://' + config.mongodb.user + ':' + config.mongodb.password + '@' + config.mongodb.server + ':' + ( process.env.MONGO_PORT || 27017 )  + '/' + config.mongodb.database);
 mongoose.connection.on('error', function (err) {
   console.error('MongoDB error: ' + err.message);
   console.error('Make sure a mongoDB server is running and accessible by this application');
   process.exit(1);
 });
 mongoose.connection.on('open', function (err) {
-  mongoose.connection.db.admin().serverStatus(function(err, data) { 
+  mongoose.connection.db.admin().serverStatus(function(err, data) {
     if (err) {
       if (err.name === "MongoError" && err.errmsg === 'need to login') {
         console.log('Forcing MongoDB authentication');

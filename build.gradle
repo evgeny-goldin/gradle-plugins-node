@@ -139,7 +139,8 @@ project ( ':run-commands' ){
 
 project ( ':redis' ){
     node {
-      redisPort    = 27018
+      redisPort    = 27016
+      env          = [ REDIS_PORT: redisPort, A : 1, B : 2 ]
       checkContent = '[0]:[hashtest 1]\n[1]:[hashtest 2]'
     }
 }
@@ -157,7 +158,6 @@ project ( ':nodejs-blackboard' ){
     node {
         scriptPath   = 'app.coffee'
         checkContent = '<h1>nodejs experiment</h1><p>blackboard</p>'
-        mongoPort    = 27017
         mongoDBPath  = 'build/db'
         before       = [ "node ${ p.projectDir.canonicalPath }/add_data.js" ]
     }
@@ -170,7 +170,8 @@ project ( ':uptime' ){
         scriptPath             = 'app.js'
         checkUrl               = 'dashboard/events'
         checkContent           = 'Latest events'
-        mongoPort              = 27017
+        mongoPort              = 27018
+        env                    = [ MONGO_PORT: mongoPort ]
         mongoDBPath            = 'build/db'
         cleanWorkspace         = true
         cleanWorkspaceCommands = [ 'git checkout -f config' ]
