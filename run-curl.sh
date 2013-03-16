@@ -24,5 +24,5 @@ curl http://127.0.0.1:3033
 echo nodejs-blackboard:
 curl http://127.0.0.1:3095
 
-echo We are Ok
+echo We are good
 exit 0
