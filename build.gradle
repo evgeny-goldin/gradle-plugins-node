@@ -39,7 +39,8 @@ subprojects {
     apply plugin: 'node'
 
     node {
-        portNumber = portNumberForProject( p )
+        nodeVersion = '0.8.22'
+        portNumber  = portNumberForProject( p )
     }
 
     clean.doFirst {
