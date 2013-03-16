@@ -18,8 +18,9 @@
     "nodemailer": "0.3.35"
   },
   "devDependencies": {
-    "mocha": "1.7.x",
-    "should": "1.1.0"
+    "mocha"   : "1.7.x",
+    "should"  : "1.1.0",
+    "forever" : "0.10.0"
   },
   "keywords": ["uptime", "monitoring", "api", "check"],
   "repository": "https://github.com/fzaninotto/uptime",

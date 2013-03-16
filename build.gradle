@@ -131,12 +131,24 @@ project ( ':hello-js/hello-js-configs-update-keys' ) {
 
 
 project ( ':run-commands' ){
-    node { run = [ 'pwd', 'coffee --version', 'grunt -version', 'git log -1', 'less --version', 'ls -al' ]}
+    node {
+        run = [ 'pwd', 'coffee --version', 'grunt -version', 'git log -1', 'less --version', 'ls -al' ]
+    }
+}
+
+
+project ( ':redis' ){
+    node {
+      redisPort    = 27018
+      checkContent = '[0]:[hashtest 1]\n[1]:[hashtest 2]'
+    }
 }
 
 
 project ( ':nirc' ){
-    node { checkContent = '<h1><i>n</i>irc</h1>' }
+    node {
+        checkContent = '<h1><i>n</i>irc</h1>'
+    }
 }
 
 
@@ -152,9 +164,16 @@ project ( ':nodejs-blackboard' ){
 }
 
 
-project ( ':redis' ){
+project ( ':uptime' ){
+    Project p ->
     node {
-      redisPort    = 27018
-      checkContent = '[0]:[hashtest 1]\n[1]:[hashtest 2]'
+        scriptPath             = 'app.js'
+        checkUrl               = 'dashboard/events'
+        checkContent           = 'Latest events'
+        mongoPort              = 27017
+        mongoDBPath            = 'build/db'
+        cleanWorkspace         = true
+        cleanWorkspaceCommands = [ 'git checkout -f config' ]
+        replaces               = [[ 'config/default.yaml' : [ '${server.port}' : portNumber ]]]
     }
 }

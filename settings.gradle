@@ -5,11 +5,12 @@ include 'hello-js/hello-js-configs-new-keys'
 include 'hello-js/hello-js-configs-update-keys'
 
 include 'run-commands'
+include 'redis'
 
 include 'nirc'
 include 'nodejs-blackboard'
-include 'redis'
-//include 'uptime'
+include 'uptime'
+
 //include 'Base-Node.js-App'
 
 rootProject.name = 'gradle-plugins-node'

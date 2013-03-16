@@ -24,5 +24,8 @@ curl http://127.0.0.1:3033
 echo nodejs-blackboard:
 curl http://127.0.0.1:3095
 
+echo uptime:
+curl http://127.0.0.1:3036
+
 echo We are good
 exit 0
