@@ -65,12 +65,12 @@ configure ( subprojects.findAll{ it.name.startsWith( 'hello-' ) }) {
     node {
         cleanWorkspace         = true
         cleanWorkspaceCommands = [ 'git checkout -f config' ]
-        checkContent           = p.name + (( p.name == 'hello-js'                     ) ? '|yhn|890|' :
-                                           ( p.name == 'hello-js-port-number'         ) ? '|undefined|undefined|' :
-                                           ( p.name == 'hello-coffee-port-number'     ) ? '|zaq|123|' :
-                                           ( p.name == 'hello-js-configs-new-keys'    ) ? '|OLM|457|false|false' :
-                                           ( p.name == 'hello-js-configs-update-keys' ) ? '|IMN|784|true|true' :
-                                                                                          '' )
+        checkContent           = projectDir.name + (( p.name == 'hello-js/hello-js'                     ) ? '|yhn|890|' :
+                                                    ( p.name == 'hello-js/hello-js-port-number'         ) ? '|undefined|undefined|' :
+                                                    ( p.name == 'hello-js/hello-coffee-port-number'     ) ? '|zaq|123|' :
+                                                    ( p.name == 'hello-js/hello-js-configs-new-keys'    ) ? '|OLM|457|false|false' :
+                                                    ( p.name == 'hello-js/hello-js-configs-update-keys' ) ? '|IMN|784|true|true' :
+                                                                                                   '' )
         printConfigs = true
         configs      = [[ 'config/development.json' : file( "${ projectDir.name }.json" ) ],
                         [ 'config/development.json' : [ port : portNumber ]]]
@@ -141,19 +141,20 @@ project ( ':nirc' ){
 
 
 project ( ':nodejs-blackboard' ){
+    Project p ->
     node {
         scriptPath   = 'app.coffee'
         checkContent = '<h1>nodejs experiment</h1><p>blackboard</p>'
-        mongoPort    = 6000
+        mongoPort    = 27017
         mongoDBPath  = 'build/db'
-        before       = [ 'node add_data.js' ]
+        before       = [ "node ${ p.projectDir.canonicalPath }/add_data.js" ]
     }
 }
 
 
 project ( ':redis' ){
-    node { 
-      redisPort    = 7000 
-      checkContent = '<h1><i>n</i>irc</h1>'
+    node {
+      redisPort    = 27018
+      checkContent = '[0]:[hashtest 1]\n[1]:[hashtest 2]'
     }
 }
