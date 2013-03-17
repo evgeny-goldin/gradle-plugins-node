@@ -4,7 +4,7 @@ apply from:   'http://evgenyg.artifactoryonline.com/evgenyg/libs-releases-local/
 
 buildscript {
 
-    final version = project.hasProperty( 'pluginsVersion' ) ? project.pluginsVersion : '0.2.2-SNAPSHOT'
+    final version = project.hasProperty( 'pluginsVersion' ) ? project.pluginsVersion : '0.2.3-SNAPSHOT'
     println "> Running Node.js plugin version [$version]"
 
     repositories {
