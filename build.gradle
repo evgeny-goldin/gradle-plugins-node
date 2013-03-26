@@ -71,6 +71,7 @@ configure ( subprojects.findAll{ it.name.startsWith( 'hello-' ) }) {
                                                     ( p.name == 'hello-js/hello-js-configs-new-keys'    ) ? '|OLM|457|false|false' :
                                                     ( p.name == 'hello-js/hello-js-configs-update-keys' ) ? '|IMN|784|true|true' :
                                                                                                    '' )
+        removeColor  =  'TEAMCITY_VERSION JENKINS_URL'.tokenize().any{ System.getenv( it ) != null }
         printConfigs = true
         configs      = [[ 'config/development.json' : file( "${ projectDir.name }.json" ) ],
                         [ 'config/development.json' : [ port : portNumber ]]]
