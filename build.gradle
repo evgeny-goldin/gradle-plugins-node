@@ -39,7 +39,7 @@ subprojects {
     apply plugin: 'node'
 
     node {
-        nodeVersion = 'latest'
+        nodeVersion = '0.8.22'
         portNumber  = portNumberForProject( p )
     }
 
