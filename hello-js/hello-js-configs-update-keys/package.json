@@ -9,6 +9,6 @@
     "dependencies": {
     },
     "devDependencies": {
-        "forever" : "0.10.0"
+        "forever" : "*"
     }
 }
