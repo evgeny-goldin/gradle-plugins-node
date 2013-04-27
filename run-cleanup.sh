@@ -2,5 +2,5 @@
 
 git checkout -f
 git clean    -df
-./gradlew    clean cleanModules setup -DcleanNode
+./gradlew -i clean cleanModules setup -DcleanNode
 echo Current directory space = [`du -hs . | awk '{ print $1 }'`]
