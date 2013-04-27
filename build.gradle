@@ -39,10 +39,10 @@ subprojects {
     apply plugin: 'node'
 
     node {
-        nodeVersion             = '0.8.22'
-        portNumber              = portNumberForProject( p )
-        npmInstallCacheLocally  = true
-        npmInstallCacheRemotely = true
+        nodeVersion    = 'latest'
+        portNumber     = portNumberForProject( p )
+        npmLocalCache  = true
+        npmRemoteCache = 'deployer:{DESede}mO1+4g8bECeWjLMKGKn34Tl1MVSVW7qI@http://evgenyg.artifactoryonline.com/evgenyg/npm/'
     }
 
     clean.doFirst {
@@ -169,6 +169,7 @@ project ( ':nodejs-blackboard' ){
 project ( ':uptime' ){
     Project p ->
     node {
+        nodeVersion            = '0.8.22'
         scriptPath             = 'app.js'
         checkUrl               = 'dashboard/events'
         checkContent           = 'Latest events'
