@@ -39,8 +39,10 @@ subprojects {
     apply plugin: 'node'
 
     node {
-        nodeVersion = '0.8.22'
-        portNumber  = portNumberForProject( p )
+        nodeVersion             = '0.8.22'
+        portNumber              = portNumberForProject( p )
+        npmInstallCacheLocally  = true
+        npmInstallCacheRemotely = true
     }
 
     clean.doFirst {
