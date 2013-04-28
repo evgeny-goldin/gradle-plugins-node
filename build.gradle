@@ -42,7 +42,7 @@ subprojects {
         nodeVersion    = 'latest'
         portNumber     = portNumberForProject( p )
         npmLocalCache  = true
-        npmRemoteCache = 'deployer:{DESede}mO1+4g8bECeWjLMKGKn34Tl1MVSVW7qI@http://evgenyg.artifactoryonline.com/evgenyg/npm/'
+        npmRemoteCache = 'npm-deployer:{DESede}E47k0RlaUjsofAJtfVnuNh9F39JzSv4q@http://evgenyg.artifactoryonline.com/evgenyg/npm/'
     }
 
     clean.doFirst {
