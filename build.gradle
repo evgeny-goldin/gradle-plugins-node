@@ -39,7 +39,7 @@ subprojects {
     apply plugin: 'node'
 
     node {
-        nodeVersion    = 'latest'
+        nodeVersion    = '0.10.5'
         portNumber     = portNumberForProject( p )
         npmLocalCache  = true
         npmRemoteCache = 'npm-deployer:{DESede}E47k0RlaUjsofAJtfVnuNh9F39JzSv4q@http://evgenyg.artifactoryonline.com/evgenyg/npm/'
