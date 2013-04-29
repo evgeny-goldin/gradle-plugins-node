@@ -50,8 +50,10 @@ subprojects {
     clean.doFirst {
         if ( System.getProperty( 'cleanNode' ) != null )
         {
-            final deleteFiles = [ new File( System.getProperty( 'user.home' ), '.nvm' ),
-                                  new File( System.getProperty( 'user.home' ), '.npm' ) ]
+            final deleteFiles = [ 
+                // new File( System.getProperty( 'user.home' ), '.nvm' ),
+                new File( System.getProperty( 'user.home' ), '.npm' ) 
+            ]
 
             if ( deleteFiles.any{ it.exists() })
             {
