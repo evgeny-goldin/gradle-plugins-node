@@ -30,7 +30,7 @@ int portNumberForProject( Project p ){ 3000 + ( Math.abs( p.name.hashCode()) % 1
 void assertEqual( File f1, File f2 )
 {
     assert ( f1.text == f2.text ), "[$f1.canonicalPath] != [$f2.canonicalPath]"
-    println "[$f1.canonicalPath] = [$f2.canonicalPath]"
+    logger.info( "[$f1.canonicalPath] = [$f2.canonicalPath]" )
 }
 
 
