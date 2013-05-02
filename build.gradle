@@ -162,7 +162,7 @@ project ( ':nodejs-blackboard' ){
     Project p ->
     node {
         scriptPath   = 'app.coffee'
-        checkContent = '<h1>nodejs experiment</h1><p>blackboard</p>'
+        checkContent = '/<h\\d>nodejs experiment</h\\d><p>blackboard</p>/'
         mongoDBPath  = 'build/db'
         before       = [ "node ${ p.projectDir.canonicalPath }/add_data.js" ]
     }
@@ -174,8 +174,8 @@ project ( ':uptime' ){
     node {
         nodeVersion            = '0.8.22'
         scriptPath             = 'app.js'
-        checkUrl               = 'dashboard/events'
-        checkContent           = 'Latest events'
+        checkUrl               = '/api'
+        checkContent           = '[{ "method": "GET", "path": "/api/checks/count" }, { "method": "GET", "path": "/api/checks" }]'
         mongoPort              = 27018
         env                    = [ MONGO_PORT: mongoPort ]
         mongoDBPath            = 'build/db'
