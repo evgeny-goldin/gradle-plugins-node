@@ -51,7 +51,7 @@ subprojects {
         if ( System.getProperty( 'cleanNode' ) != null )
         {
             final deleteFiles = [ 
-                // new File( System.getProperty( 'user.home' ), '.nvm' ),
+                new File( System.getProperty( 'user.home' ), '.nvm' ),
                 new File( System.getProperty( 'user.home' ), '.npm' ) 
             ]
 
