@@ -39,12 +39,13 @@ subprojects {
     apply plugin: 'node'
 
     node {
-        nodeVersion    = 'latest'
-        portNumber     = portNumberForProject( p )
-        npmLocalCache  = true
-        npmRemoteCache = 'npm-deployer:{DESede}E47k0RlaUjsofAJtfVnuNh9F39JzSv4q@http://evgenyg.artifactoryonline.com/evgenyg/npm/'
-        removeColor    = 'TEAMCITY_VERSION JENKINS_URL'.tokenize().any{ System.getenv( it ) != null }
-        printConfigs   = true
+        nodeVersion               = 'latest'
+        portNumber                = portNumberForProject( p )
+        npmLocalCache             = true
+        npmInstallDevDependencies = false
+        npmRemoteCache            = 'npm-deployer:{DESede}E47k0RlaUjsofAJtfVnuNh9F39JzSv4q@http://evgenyg.artifactoryonline.com/evgenyg/npm/'
+        removeColor               = 'TEAMCITY_VERSION JENKINS_URL'.tokenize().any{ System.getenv( it ) != null }
+        printConfigs              = true
     }
 
     clean.doFirst {
