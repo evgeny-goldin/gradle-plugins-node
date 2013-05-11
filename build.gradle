@@ -4,7 +4,7 @@ apply from:   'http://evgenyg.artifactoryonline.com/evgenyg/libs-releases-local/
 
 buildscript {
 
-    final version = project.hasProperty( 'pluginsVersion' ) ? project.pluginsVersion : '0.2.10-SNAPSHOT'
+    final version = project.hasProperty( 'pluginsVersion' ) ? project.pluginsVersion : '0.3-SNAPSHOT'
     println "> Running Node.js plugin version [$version]"
 
     repositories {
@@ -39,7 +39,7 @@ subprojects {
     apply plugin: 'node'
 
     node {
-        nodeVersion    = '0.10.5'
+        nodeVersion    = 'latest'
         portNumber     = portNumberForProject( p )
         npmLocalCache  = true
         npmRemoteCache = 'npm-deployer:{DESede}E47k0RlaUjsofAJtfVnuNh9F39JzSv4q@http://evgenyg.artifactoryonline.com/evgenyg/npm/'
@@ -50,9 +50,9 @@ subprojects {
     clean.doFirst {
         if ( System.getProperty( 'cleanNode' ) != null )
         {
-            final deleteFiles = [ 
+            final deleteFiles = [
                 new File( System.getProperty( 'user.home' ), '.nvm' ),
-                new File( System.getProperty( 'user.home' ), '.npm' ) 
+                new File( System.getProperty( 'user.home' ), '.npm' )
             ]
 
             if ( deleteFiles.any{ it.exists() })
