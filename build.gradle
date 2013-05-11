@@ -19,6 +19,26 @@ buildscript {
 defaultTasks 'clean', 'cleanModules', 'start', 'restartall', 'stop', 'stopall'
 
 
+idea.project {
+    jdkName = '1.7'
+    ipr.withXml { provider -> provider.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git' }
+}
+
+
+idea.module {
+
+    downloadSources = true
+    downloadJavadoc = false
+
+    excludeDirs += file( 'build' )
+
+    iml.withXml {
+        provider ->
+        provider.node.component.first().appendNode( 'orderEntry', [ type : 'library', name : 'Groovy', level: 'application' ])
+    }
+}
+
+
 int portNumberForProject( Project p ){ 3000 + ( Math.abs( p.name.hashCode()) % 100 ) }
 void assertEqual( File f1, File f2 )
 {
