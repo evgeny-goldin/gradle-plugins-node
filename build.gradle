@@ -166,15 +166,16 @@ project ( ':nodejs-blackboard' ){
 project ( ':uptime' ){
     Project p ->
     node {
-        scriptPath             = 'app.js'
-        checkUrl               = '/api'
-        checkContent           = '[{ "method": "GET", "path": "/api/checks/count" }, { "method": "GET", "path": "/api/checks" }]'
-        mongoPort              = 27018
-        env                    = [ MONGO_PORT: mongoPort ]
-        mongoDBPath            = 'build/db'
-        testInput              = 'test/lib'
-        cleanWorkspace         = true
-        cleanWorkspaceCommands = [ 'git checkout -f config' ]
-        replaces               = [[ 'config/default.yaml' : [ '${server.port}' : portNumber ]]]
+        scriptPath                = 'app.js'
+        checkUrl                  = '/api'
+        checkContent              = '[{ "method": "GET", "path": "/api/checks/count" }, { "method": "GET", "path": "/api/checks" }]'
+        mongoPort                 = 27018
+        env                       = [ MONGO_PORT: mongoPort ]
+        mongoDBPath               = 'build/db'
+        testInput                 = 'test/*/*.js'
+        cleanWorkspace            = true
+        cleanWorkspaceCommands    = [ 'git checkout -f config' ]
+        replaces                  = [[ 'config/default.yaml' : [ '${server.port}' : portNumber ]]]
+        npmInstallDevDependencies = true
     }
 }
