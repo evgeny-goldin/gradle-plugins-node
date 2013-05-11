@@ -7,8 +7,8 @@
         { "name": "Evgeny Goldin",  "email": "evgenyg@gmail.com" }
     ],
     "dependencies": {
+        "forever" : "*"
     },
     "devDependencies": {
-        "forever" : "*"
     }
 }

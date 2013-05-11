@@ -7,9 +7,9 @@
         { "name": "Evgeny Goldin",  "email": "evgenyg@gmail.com" }
     ],
     "dependencies": {
-    },
-    "devDependencies": {
         "coffee-script" : "1.5.0",
         "forever"       : "*"
+    },
+    "devDependencies": {
     }
 }
