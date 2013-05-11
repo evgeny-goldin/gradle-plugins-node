@@ -172,7 +172,6 @@ project ( ':nodejs-blackboard' ){
 project ( ':uptime' ){
     Project p ->
     node {
-        nodeVersion            = '0.8.22'
         scriptPath             = 'app.js'
         checkUrl               = '/api'
         checkContent           = '[{ "method": "GET", "path": "/api/checks/count" }, { "method": "GET", "path": "/api/checks" }]'
