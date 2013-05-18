@@ -35,6 +35,7 @@ idea.module {
     iml.withXml {
         provider ->
         provider.node.component.first().appendNode( 'orderEntry', [ type : 'library', name : 'Groovy', level: 'application' ])
+        provider.node.component.first().appendNode( 'orderEntry', [ type : 'library', name : 'Gradle', level: 'application' ])
     }
 }
 
@@ -52,13 +53,18 @@ subprojects {
     apply plugin: 'node'
 
     node {
-        nodeVersion               = 'latest'
-        portNumber                = portNumberForProject( p )
-        npmLocalCache             = true
-        npmInstallDevDependencies = false
-        npmRemoteCache            = 'npm-deployer:{DESede}E47k0RlaUjsofAJtfVnuNh9F39JzSv4q@http://evgenyg.artifactoryonline.com/evgenyg/npm/'
-        removeColor               = 'TEAMCITY_VERSION JENKINS_URL'.tokenize().any{ System.getenv( it ) != null }
-        printConfigs              = true
+        nodeVersion            = 'latest'
+        portNumber             = portNumberForProject( p )
+        cleanWorkspace         = true
+        cleanWorkspaceCommands = [ 'git checkout -f config package.json' ]
+        npmRemoteCache         = 'npm-deployer:{DESede}E47k0RlaUjsofAJtfVnuNh9F39JzSv4q@http://evgenyg.artifactoryonline.com/evgenyg/npm/'
+        printConfigs           = true
+        checks                 = [ '/' : [ 200, '' ]]
+    }
+
+    setup.doFirst {
+        node.npmInstallDevDependencies = p.gradle.taskGraph.hasTask( test )
+        println "> devDependencies *are${ node.npmInstallDevDependencies ? '' : ' not' }* installed"
     }
 
     clean.doFirst {
@@ -82,19 +88,17 @@ subprojects {
 configure ( subprojects.findAll{ it.name.startsWith( 'hello-' ) }) {
     Project p ->
 
-    node {
-        cleanWorkspace         = true
-        cleanWorkspaceCommands = [ 'git checkout -f config' ]
-        checkContent           = projectDir.name + (( p.name == 'hello-js/hello-js'                     ) ? '|yhn|890|' :
-                                                    ( p.name == 'hello-js/hello-js-port-number'         ) ? '|undefined|undefined|' :
-                                                    ( p.name == 'hello-js/hello-coffee-port-number'     ) ? '|zaq|123|' :
-                                                    ( p.name == 'hello-js/hello-js-configs-new-keys'    ) ? '|OLM|457|false|false' :
-                                                    ( p.name == 'hello-js/hello-js-configs-update-keys' ) ? '|IMN|784|true|true' :
-                                                                                                   '' )
-        configs      = [[ 'config/development.json' : file( "${ projectDir.name }.json" ) ],
-                        [ 'config/development.json' : [ port : portNumber ]]]
-    }
+    //noinspection GroovyMapGetCanBeKeyedAccess
+    final checkContent = p.projectDir.name + [ 'hello-js/hello-js'                     : '|yhn|890|',
+                                               'hello-js/hello-js-port-number'         : '|undefined|undefined|',
+                                               'hello-js/hello-coffee-port-number'     : '|zaq|123|',
+                                               'hello-js/hello-js-configs-new-keys'    : '|OLM|457|false|false',
+                                               'hello-js/hello-js-configs-update-keys' : '|IMN|784|true|true' ].get( p.name )
+    assert checkContent
 
+    node.checks  = [ '/' : [ 200, checkContent ]]
+    node.configs = [[ 'config/development.json' : file( "${ projectDir.name }.json" ) ],
+                    [ 'config/development.json' : [ port : portNumberForProject( p ) ]]]
     setup << {
         /**
          * Comparing all configs generated with '*-merged.json' files expected.
@@ -150,35 +154,30 @@ project ( ':hello-js/hello-js-configs-update-keys' ) {
 
 
 project ( ':run-commands' ){
-    node {
-        run = [ 'pwd', 'coffee --version', 'grunt -version', 'git log -1', 'less --version', 'ls -al' ]
-    }
+    node.run = [ 'pwd', 'coffee --version', 'grunt -version', 'git log -1', 'less --version', 'ls -al' ]
 }
 
 
 project ( ':redis' ){
     node {
-      redisPort    = 27016
-      env          = [ REDIS_PORT: redisPort, A : 1, B : 2 ]
-      checkContent = '/\\Q[0]:[hashtest 1]\n[1]:[hashtest 2]\\E/'
+      redisPort = 27016
+      env       = [ REDIS_PORT: redisPort, A : 1, B : 2 ]
+      checks    = [ '/' : [ 200, '/\\Q[0]:[hashtest 1]\n[1]:[hashtest 2]\\E/' ]]
     }
 }
 
 
 project ( ':nirc' ){
-    node {
-        checkContent = '<h1><i>n</i>irc</h1>'
-    }
+    node.checks = [ '/' : [ 200, '<h1><i>n</i>irc</h1>' ]]
 }
 
 
 project ( ':nodejs-blackboard' ){
     Project p ->
     node {
-        scriptPath   = 'app.coffee'
-        checkContent = '/<h\\d>nodejs experiment</h\\d><p>blackboard</p>/'
-        mongoDBPath  = 'build/db'
-        before       = [ "node ${ p.projectDir.canonicalPath }/add_data.js" ]
+        checks      = [ '/' : [ 200, '/<h\\d>nodejs experiment</h\\d><p>blackboard</p>/' ]]
+        mongoDBPath = 'db'
+        before      = [ "node ${ p.projectDir.canonicalPath }/add_data.js" ]
     }
 }
 
@@ -186,16 +185,14 @@ project ( ':nodejs-blackboard' ){
 project ( ':uptime' ){
     Project p ->
     node {
-        scriptPath                = 'app.js'
-        checkUrl                  = '/api'
-        checkContent              = '[{ "method": "GET", "path": "/api/checks/count" }, { "method": "GET", "path": "/api/checks" }]'
-        mongoPort                 = 27018
-        env                       = [ MONGO_PORT: mongoPort ]
-        mongoDBPath               = 'build/db'
-        testInput                 = 'test/*/*.js'
-        cleanWorkspace            = true
-        cleanWorkspaceCommands    = [ 'git checkout -f config' ]
-        replaces                  = [[ 'config/default.yaml' : [ '${server.port}' : portNumber ]]]
+        checks      = [ '/'           : [ 200, 'Uptime*Latest events*' ],
+                        '/api'        : [ 200, '[{ "method": "GET", "path": "/api/checks/count" }, { "method": "GET", "path": "/api/checks" }]'],
+                        '/api/checks' : [ 200, '[]' ]]
+        mongoPort   = 27018
+        env         = [ MONGO_PORT: mongoPort ]
+        mongoDBPath = 'db'
+        testInput   = 'test/lib'
+        replaces    = [[ 'config/default.yaml' : [ '${server.port}' : portNumber ]]]
         npmInstallDevDependencies = true
     }
 }

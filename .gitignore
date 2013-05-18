@@ -6,3 +6,4 @@ out
 *.iws
 .gradle
 node_modules
+db
