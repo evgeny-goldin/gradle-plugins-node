@@ -161,7 +161,7 @@ project ( ':run-commands' ){
 project ( ':redis' ){
     node {
       redisPort = 27016
-      env       = [ REDIS_PORT: redisPort, A : 1, B : 2 ]
+      env       = [ A : 1, B : 2 ]
       checks    = [ '/' : [ 200, '/\\Q[0]:[hashtest 1]\n[1]:[hashtest 2]\\E/' ]]
     }
 }
@@ -189,7 +189,6 @@ project ( ':uptime' ){
                          '/api'        : [ 200, '[{ "method": "GET", "path": "/api/checks/count" }, { "method": "GET", "path": "/api/checks" }]'],
                          '/api/checks' : [ 200, '[]' ]]
         mongoPort    = 27018
-        env          = [ MONGO_PORT: mongoPort ]
         mongoDBPath  = 'db path with space'
         mongoLogpath = 'log path with space'
         testInput    = 'test/lib'
