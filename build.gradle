@@ -185,14 +185,15 @@ project ( ':nodejs-blackboard' ){
 project ( ':uptime' ){
     Project p ->
     node {
-        checks      = [ '/'           : [ 200, 'Uptime*Latest events*' ],
-                        '/api'        : [ 200, '[{ "method": "GET", "path": "/api/checks/count" }, { "method": "GET", "path": "/api/checks" }]'],
-                        '/api/checks' : [ 200, '[]' ]]
-        mongoPort   = 27018
-        env         = [ MONGO_PORT: mongoPort ]
-        mongoDBPath = 'db'
-        testInput   = 'test/lib'
-        replaces    = [[ 'config/default.yaml' : [ '${server.port}' : portNumber ]]]
+        checks       = [ '/'           : [ 200, 'Uptime*Latest events*' ],
+                         '/api'        : [ 200, '[{ "method": "GET", "path": "/api/checks/count" }, { "method": "GET", "path": "/api/checks" }]'],
+                         '/api/checks' : [ 200, '[]' ]]
+        mongoPort    = 27018
+        env          = [ MONGO_PORT: mongoPort ]
+        mongoDBPath  = 'db path with space'
+        mongoLogpath = 'log path with space'
+        testInput    = 'test/lib'
+        replaces     = [[ 'config/default.yaml' : [ '${server.port}' : portNumber ]]]
         npmInstallDevDependencies = true
     }
 }
