@@ -54,7 +54,7 @@ subprojects {
 
     node {
         nodeVersion            = 'latest'
-        portNumber             = portNumberForProject( p )
+        port                   = portNumberForProject( p )
         cleanWorkspace         = true
         cleanWorkspaceCommands = [ 'git checkout -f config package.json' ]
         npmRemoteCache         = 'npm-deployer:{DESede}E47k0RlaUjsofAJtfVnuNh9F39JzSv4q@http://evgenyg.artifactoryonline.com/evgenyg/npm/'
