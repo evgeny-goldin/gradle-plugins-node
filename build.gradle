@@ -8,9 +8,9 @@ buildscript {
     println "> Running Node.js plugin version [$version]"
 
     repositories {
-        mavenLocal()
         maven { url 'http://jcenter.bintray.com' }
         maven { url 'http://evgenyg.artifactoryonline.com/evgenyg/plugins-snapshots-local/' }
+        mavenLocal()
     }
 
     dependencies { classpath "com.github.goldin.plugins.gradle:node:$version" }
@@ -51,6 +51,9 @@ void assertEqual( File f1, File f2 )
 subprojects {
     Project p ->
     apply plugin: 'node'
+
+
+    group = 'com.github.goldin.plugins.gradle-plugins-node'    
 
     node {
         nodeVersion            = 'latest'
@@ -125,7 +128,7 @@ project ( ':hello-js/hello-js-configs-new-keys' ) {
     node {
         configsNewKeys = 'create'
         configs        = [[ 'config/development.json'   : file( "${ projectDir.name }.json" ) ],
-                          [ 'config/development.json'   : [ port : portNumber ]],
+                          [ 'config/development.json'   : [ port : portNumberForProject( p ) ]],
                           [ 'config/development.json'   : file( "${ projectDir.name }-2.json" ) ],
                           [ 'config/development-2.json' : file( "${ projectDir.name }.properties" ) ]]
     }
@@ -138,7 +141,7 @@ project ( ':hello-js/hello-js-configs-update-keys' ) {
     node {
         configsNewKeys = 'fail'
         configs        = [[ 'config/development.json'   : file( "${ projectDir.name }.json" ) ],
-                          [ 'config/development.json'   : [ port : portNumber ]],
+                          [ 'config/development.json'   : [ port : portNumberForProject( p ) ]],
                           [ 'config/development-2.json' : file( "${ projectDir.name }.properties" ) ],
                           [ 'config/development-3.json' : file( "${ projectDir.name }-3.json" ) ],
                           [ 'config/development-4.json' : file( "${ projectDir.name }-4.json" ) ],
@@ -193,7 +196,7 @@ project ( ':uptime' ){
         mongoDBPath  = 'db path with space'
         mongoLogpath = 'log path with space'
         testInput    = 'test/lib'
-        replaces     = [[ 'config/default.yaml' : [ '${server.port}' : portNumber ]]]
+        replaces     = [[ 'config/default.yaml' : [ '${server.port}' : portNumberForProject( p ) ]]]
         npmInstallDevDependencies = true
     }
 }
