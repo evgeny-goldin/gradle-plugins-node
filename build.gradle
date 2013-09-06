@@ -8,7 +8,7 @@ buildscript {
     println "> Running Node.js plugin version [$version]"
 
     repositories {
-        maven { url 'http://jcenter.bintray.com' }
+        jcenter()
         maven { url 'http://evgenyg.artifactoryonline.com/evgenyg/plugins-snapshots-local/' }
         mavenLocal()
     }
